@@ -21,5 +21,5 @@ export default function () {
         },
         coverageIstanbulReporter: {
       `))
-    .then(() => ng('test', '--single-run'));
+    .then(() => ng('test', '--watch=false'));
 }

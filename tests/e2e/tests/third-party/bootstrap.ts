@@ -29,7 +29,7 @@ export default function() {
     `))
     .then(() => ng(
       'build',
-      '--target', 'production',
+      '--optimization-level', '1',
       '--extract-css',
       '--output-hashing=none'
     ))

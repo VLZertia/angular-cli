@@ -29,11 +29,11 @@ export default async function () {
 
   await silentNpm('install', 'firebase@3.7.8');
   await ng('build', '--aot');
-  await ng('test', '--single-run');
+  await ng('test', '--watch=false');
 
   await silentNpm('install', 'firebase@4.9.0');
   await ng('build', '--aot');
-  await ng('test', '--single-run');
+  await ng('test', '--watch=false');
 
   await updateJsonFile('src/tsconfig.app.json', tsconfig => {
     tsconfig.compilerOptions.paths = {};

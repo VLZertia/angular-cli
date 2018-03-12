@@ -13,5 +13,5 @@ export default function () {
       const compilerOptions = configJson['compilerOptions'];
       compilerOptions['target'] = 'es2015';
     }))
-    .then(() => ng('test', '--single-run'));
+    .then(() => ng('test', '--watch=false'));
 }

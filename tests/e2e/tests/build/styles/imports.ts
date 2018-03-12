@@ -48,7 +48,7 @@ export default function () {
         .then(() => replaceInFile('src/app/app.component.ts',
           './app.component.css', `./app.component.${ext}`))
         // run build app
-        .then(() => ng('build', '--extract-css', '--sourcemaps'))
+        .then(() => ng('build', '--extract-css', '--source-map'))
         // verify global styles
         .then(() => expectFileToMatch('dist/styles.css',
           /body\s*{\s*background-color: #00f;\s*}/))
@@ -63,7 +63,7 @@ export default function () {
         .then(() => expectFileToMatch('dist/main.js',
           /h1.*background:\s*#000+/))
         // Also check imports work on ng test
-        .then(() => !ejected && ng('test', '--single-run'))
+        .then(() => !ejected && ng('test', '--watch=false'))
         // change files back
         .then(() => updateJsonFile('.angular-cli.json', configJson => {
           const app = configJson['apps'][0];

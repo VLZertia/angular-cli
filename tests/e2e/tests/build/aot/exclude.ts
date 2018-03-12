@@ -34,5 +34,5 @@ export default function () {
       delete tsconfigJson['compilerOptions']['types'];
     }))
     .then(() => ng('build', '--aot'))
-    .then(() => !ejected && ng('test', '--single-run'));
+    .then(() => !ejected && ng('test', '--watch=false'));
 }

@@ -9,5 +9,5 @@ export default function () {
 
   // Fails on single run with broken compilation.
   return writeFile('src/app.component.spec.ts', '<p> definitely not typescript </p>')
-    .then(() => expectToFail(() => ng('test', '--single-run')));
+    .then(() => expectToFail(() => ng('test', '--watch=false')));
 }

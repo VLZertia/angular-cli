@@ -15,11 +15,11 @@ export default function () {
   // These tests should be moved to the default when we use ng5 in new projects.
   return Promise.resolve()
     // tests for register_locale_data transformer
-    .then(() => ng('build', '--aot', '--locale=fr'))
+    .then(() => ng('build', '--aot', '--i18n-locale=fr'))
     .then(() => expectFileToMatch('dist/main.js', /registerLocaleData/))
     .then(() => expectFileToMatch('dist/main.js', /angular_common_locales_fr/))
     .then(() => rimraf('dist'))
-    .then(() => ng('build', '--aot', '--locale=fr_FR'))
+    .then(() => ng('build', '--aot', '--i18n-locale=fr_FR'))
     .then(() => expectFileToMatch('dist/main.js', /registerLocaleData/))
     .then(() => expectFileToMatch('dist/main.js', /angular_common_locales_fr/))
     .then(() => rimraf('dist'))

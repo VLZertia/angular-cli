@@ -11,7 +11,7 @@ export default function() {
     .then(() => writeFile(
       join('src/app/i18n-test', 'i18n-test.component.html'),
       '<p i18n>Hello world</p>'))
-    .then(() => ng('xi18n', '--locale', 'fr'))
+    .then(() => ng('xi18n', '--i18n-locale', 'fr'))
     .then((output) => {
       if (!output.stdout.match(/starting from Angular v4/)) {
         return expectFileToMatch(join('src', 'messages.xlf'), 'source-language="fr"');

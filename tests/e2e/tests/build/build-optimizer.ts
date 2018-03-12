@@ -9,7 +9,7 @@ export default function () {
 
   return ng('build', '--aot', '--build-optimizer')
     .then(() => expectToFail(() => expectFileToMatch('dist/main.js', /\.decorators =/)))
-    .then(() => ng('build', '--target', 'production'))
+    .then(() => ng('build', '--optimization-level', '1'))
     .then(() => expectToFail(() => expectFileToExist('dist/vendor.js')))
     .then(() => expectToFail(() => expectFileToMatch('dist/main.js', /\.decorators =/)));
 }

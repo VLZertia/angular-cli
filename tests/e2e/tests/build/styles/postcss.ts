@@ -20,7 +20,7 @@ export default function () {
       div { -webkit-box-flex: 1; -ms-flex: 1; flex: 1 }
     `))
     // uses postcss-discard-comments plugin for prod
-    .then(() => ng('build', '--target', 'production'))
+    .then(() => ng('build', '--optimization-level', '1'))
     .then(() => glob.sync('dist/styles.*.css').find(file => !!file))
     .then((stylesBundle) => expectFileToMatch(stylesBundle, stripIndents`
       /*! important-comment */div{-webkit-box-flex:1;-ms-flex:1;flex:1}

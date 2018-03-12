@@ -29,6 +29,7 @@ export function createArchitectWorkspace(cliConfig: any): any {
       main: app.main,
       polyfills: app.polyfills,
       tsConfig: app.tsconfig,
+      progress: false,
     };
 
     browserOptions.scripts = (app.scripts || []).map(extraEntryMapper);

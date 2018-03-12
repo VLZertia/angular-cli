@@ -15,7 +15,7 @@ export default function () {
         });
       });
     `)
-    .then(() => ng('test', '--single-run'))
+    .then(() => ng('test', '--watch=false'))
 
     // Tests can run in different environment.
     .then(() => writeFile('src/app/environment.spec.ts', `
@@ -27,5 +27,5 @@ export default function () {
         });
       });
     `))
-    .then(() => ng('test', '-e', 'prod', '--single-run'));
+    .then(() => ng('test', '-e', 'prod', '--watch=false'));
 }
