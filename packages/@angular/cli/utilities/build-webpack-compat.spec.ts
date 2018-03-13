@@ -97,6 +97,7 @@ const expectedWorkspace = {
               { 'glob': 'assets' },
               { 'glob': 'favicon.ico' },
             ],
+            'progress': false
           },
           'configurations': {
             'production': {
@@ -177,6 +178,7 @@ const expectedWorkspace = {
             'scripts': [] as any[],
             'styles': [] as any[],
             'assets': [] as any[],
+            'progress': false
           },
           'configurations': {
             'production': {

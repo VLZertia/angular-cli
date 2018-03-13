@@ -95,8 +95,8 @@ class CLI {
     };
 
     try {
-      await runCommand(environment.commands, environment.cliArgs, logger, context);
-      return 0;
+      const success = await runCommand(environment.commands, environment.cliArgs, logger, context);
+      return success ? 0 : 1;
     } catch (err) {
       if (err) {
         const msg = typeof err === 'string' ? err : err.message;
