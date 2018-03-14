@@ -47,14 +47,14 @@ export abstract class ArchitectCommand extends Command {
       }))
       .toPromise()
       .then((schema) => this.mapArchitectOptions(schema))
-      .then(() => {});
+      .then(() => { });
   }
 
   protected mapArchitectOptions(schema: any) {
     const properties = schema.properties;
     const keys = Object.keys(properties);
     keys
-      .map(key => ({...properties[key], ...{name: stringUtils.dasherize(key)}}))
+      .map(key => ({ ...properties[key], ...{ name: stringUtils.dasherize(key) } }))
       .map(opt => {
         let type;
         const schematicType = opt.type;
@@ -111,7 +111,7 @@ export abstract class ArchitectCommand extends Command {
     aliases: ['c']
   };
 
-  protected async runArchitect(options: RunArchitectOptions): Promise<boolean> {
+  protected async runArchitect(options: RunArchitectOptions): Promise<number> {
     const runOptions: RunOptions = {
       target: this.target,
       root: this.project.root,
@@ -119,7 +119,7 @@ export abstract class ArchitectCommand extends Command {
     };
     const buildResult = await run(runOptions).toPromise();
 
-    return buildResult.success;
+    return buildResult.success ? 0 : 1;
   }
 }
 
