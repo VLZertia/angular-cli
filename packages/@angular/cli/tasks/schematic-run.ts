@@ -10,7 +10,6 @@ import {
 import { BuiltinTaskExecutor } from '@angular-devkit/schematics/tasks/node';
 import { FileSystemHost } from '@angular-devkit/schematics/tools';
 import { of as observableOf } from 'rxjs/observable/of';
-import * as path from 'path';
 import chalk from 'chalk';
 import { CliConfig } from '../models/config';
 import { concat, concatMap, ignoreElements, map } from 'rxjs/operators';
@@ -65,8 +64,6 @@ export default Task.extend({
 
     const collection = getCollection(collectionName);
     const schematic = getSchematic(collection, schematicName);
-
-    const projectRoot = !!this.project ? this.project.root : workingDir;
 
     const preppedOptions = prepOptions(schematic, taskOptions);
     const opts = { ...taskOptions, ...preppedOptions };
@@ -157,31 +154,32 @@ export default Task.extend({
           ui.writeLine(yellow(`\nNOTE: Run with "dry run" no changes were made.`));
         }
         return {modifiedFiles};
-      })
-      .then((output: SchematicOutput) => {
-        const modifiedFiles = output.modifiedFiles;
-        const lintFix = taskOptions.lintFix !== undefined ?
-          taskOptions.lintFix : CliConfig.getValue('defaults.lintFix');
-
-        if (lintFix && modifiedFiles) {
-          const LintTask = require('./lint').default;
-          const lintTask = new LintTask({
-            ui: this.ui,
-            project: this.project
-          });
-
-          return lintTask.run({
-            fix: true,
-            force: true,
-            silent: true,
-            configs: [{
-              files: modifiedFiles
-                .filter((file: string) => /.ts$/.test(file))
-                .map((file: string) => path.join(projectRoot, file))
-            }]
-          });
-        }
       });
+      // TODO (architect): figure out what to do about lintFix
+      // .then((output: SchematicOutput) => {
+      //   const modifiedFiles = output.modifiedFiles;
+      //   const lintFix = taskOptions.lintFix !== undefined ?
+      //     taskOptions.lintFix : CliConfig.getValue('defaults.lintFix');
+
+      //   if (lintFix && modifiedFiles) {
+      //     const LintTask = require('./lint').default;
+      //     const lintTask = new LintTask({
+      //       ui: this.ui,
+      //       project: this.project
+      //     });
+
+      //     return lintTask.run({
+      //       fix: true,
+      //       force: true,
+      //       silent: true,
+      //       configs: [{
+      //         files: modifiedFiles
+      //           .filter((file: string) => /.ts$/.test(file))
+      //           .map((file: string) => path.join(projectRoot, file))
+      //       }]
+      //     });
+      //   }
+      // });
   }
 });
 

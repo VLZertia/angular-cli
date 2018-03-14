@@ -26,7 +26,6 @@ export default function () {
     .then(_ => writeMultipleFiles({
       './src/folder/.gitkeep': '',
       './src/folder/folder-asset.txt': 'folder-asset.txt',
-      './src/string-asset.txt': 'string-asset.txt',
       './src/glob-asset.txt': 'glob-asset.txt',
       './src/output-asset.txt': 'output-asset.txt',
       './node_modules/some-package/node_modules-asset.txt': 'node_modules-asset.txt',
@@ -89,8 +88,7 @@ export default function () {
     .then(() => updateJsonFile('.angular-cli.json', configJson => {
       const app = configJson['apps'][0];
       app['assets'] = [
-        'folder',
-        'string-asset.txt',
+        { 'glob': '**/*', 'input': 'folder', 'output': 'folder' },
         { 'glob': 'glob-asset.txt' },
         { 'glob': 'output-asset.txt', 'output': 'output-folder' },
         { 'glob': '**/*', 'input': '../node_modules/some-package/', 'output': 'package-folder' }
@@ -99,7 +97,6 @@ export default function () {
     // Test files are present on build output.
     .then(() => ng('build'))
     .then(() => expectFileToMatch('./dist/folder/folder-asset.txt', 'folder-asset.txt'))
-    .then(() => expectFileToMatch('./dist/string-asset.txt', 'string-asset.txt'))
     .then(() => expectFileToMatch('./dist/glob-asset.txt', 'glob-asset.txt'))
     .then(() => expectFileToMatch('./dist/output-folder/output-asset.txt', 'output-asset.txt'))
     .then(() => expectFileToMatch('./dist/package-folder/node_modules-asset.txt',
@@ -140,7 +137,6 @@ export default function () {
         export class AppComponent {
           public assets = [
             { path: './folder/folder-asset.txt', content: '' },
-            { path: './string-asset.txt', content: '' },
             { path: './glob-asset.txt', content: '' },
             { path: './output-folder/output-asset.txt', content: '' },
             { path: './package-folder/node_modules-asset.txt', content: '' },
@@ -180,12 +176,11 @@ export default function () {
           it('should display asset contents', () => {
             browser.get('/');
             element.all(by.css('app-root p')).then(function (assets) {
-              expect(assets.length).toBe(5);
+              expect(assets.length).toBe(4);
               expect(assets[0].getText()).toBe('folder-asset.txt');
-              expect(assets[1].getText()).toBe('string-asset.txt');
-              expect(assets[2].getText()).toBe('glob-asset.txt');
-              expect(assets[3].getText()).toBe('output-asset.txt');
-              expect(assets[4].getText()).toBe('node_modules-asset.txt');
+              expect(assets[1].getText()).toBe('glob-asset.txt');
+              expect(assets[2].getText()).toBe('output-asset.txt');
+              expect(assets[3].getText()).toBe('node_modules-asset.txt');
             });
           });
         });`,
